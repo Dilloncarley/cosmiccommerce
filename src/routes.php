@@ -1,6 +1,10 @@
 <?php 
 //home page
-$app->get('/', function () use ($app, $twig) {
+$app->get('/test', function () use ($app, $twig) {
+    echo $twig->render('home.html', array('name' => 'Fabien'));
+
+});
+$app->get('/dogs', function () use ($app, $twig) {
     echo $twig->render('home.html', array('name' => 'Fabien'));
 
 });
