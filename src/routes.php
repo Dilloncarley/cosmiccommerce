@@ -1,11 +1,9 @@
 <?php 
+session_start();
+
 //home page
-$app->get('/test', function () use ($app, $twig) {
-    echo $twig->render('home.html', array('name' => 'Fabien'));
+$app->get('/', function () use ($app, $twig) {
+    echo $twig->render('home.html', array('app' => $app));
 
-});
-$app->get('/dogs', function () use ($app, $twig) {
-    echo $twig->render('home.html', array('name' => 'Fabien'));
-
-});
+})->setName('home');
 ?>
