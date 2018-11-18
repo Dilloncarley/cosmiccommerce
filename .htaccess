@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
-   RewriteEngine on
-   RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteCond %{REQUEST_FILENAME} !-d
-   RewriteRule ^  index.php [L]
-   RewriteCond %{HTTP_HOST} !^pluto.cse.msstate.edu$ [NC]
-   RewriteBase /~group13/
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^  index.php [L]
+    RewriteCond %{HTTP_HOST} !^pluto.cse.msstate.edu$ [NC]
+    RewriteBase /~group13/
 </IfModule>
