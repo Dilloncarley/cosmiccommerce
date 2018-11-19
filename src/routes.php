@@ -1,5 +1,6 @@
 <?php 
 session_start();
+$_SESSION['phpCAS']['user'] = "jrs1173"; 
 $netId = $_SESSION['phpCAS']['user'];
 //landing page
 $app->get('/', function () use ($app, $twig) {
