@@ -10,7 +10,7 @@ $app->get('/', function () use ($app, $twig) {
 //login
 $app->get('/login', function() use ($app, $twig) {
     //auth through CAS system
-    require_once('auth/inc/CAS/1.3.5/casAuth.php');
+    require_once('auth/casSystem');
 
   
 });
