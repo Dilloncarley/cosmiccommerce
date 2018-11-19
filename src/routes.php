@@ -7,6 +7,24 @@ $app->get('/', function () use ($app, $twig) {
 
 })->setName('home');
 
+//login
+$app->get('/login', function() use ($app, $twig) {
+    //auth through CAS system
+    require_once('controllers/create_quiz.php');
+
+  
+});
+
+//logout
+$app->get('/logout', function() use ($app, $twig) {
+    $_SESSION['phpCAS']['user'] = null;
+    $req = $app->request;
+
+    //Get root URI
+    $rootUri = $req->getRootUri();
+    $app->response->redirect( $rootUri );
+
+});
 
 // ADMIN GROUP ROUTES
 $app->group('/admin-dashboard', function () use ($app, $twig) {
