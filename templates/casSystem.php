@@ -1,6 +1,6 @@
 <?php
     // CAS authentication 
-    include_once('inc/CAS/1.3.5/casAuth.php');
+    include_once('../cosmiccommerce/inc/CAS/1.3.5/casAuth.php');
 
     $req = $app->request;
     //Get root URI

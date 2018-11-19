@@ -1,6 +1,6 @@
 <?php 
 session_start();
-
+$netId = $_SESSION['phpCAS']['user'];
 //landing page
 $app->get('/', function () use ($app, $twig) {
     echo $twig->render('home.html', array('app' => $app));
@@ -9,9 +9,9 @@ $app->get('/', function () use ($app, $twig) {
 
 //login
 $app->get('/login', function() use ($app, $twig) {
-    //auth through CAS system
-    require_once('auth/casSystem');
 
+    //auth through CAS system
+    echo $app->render('casSystem.php', array('app' => $app));
   
 });
 
@@ -66,7 +66,7 @@ $app->group('/admin-dashboard', function () use ($app, $twig) {
 });
 
 //Regular authenticated and guest user inventory group routes
-$app->group('/inventory', function () use ($app, $twig) {
+$app->group('/inventory', function () use ($app, $twig, $netId) {
 
    
      // View item with ID
@@ -75,8 +75,8 @@ $app->group('/inventory', function () use ($app, $twig) {
     });
 
     //Base listings page
-    $app->get('/', function () use ($app, $twig) {
-        echo $twig->render('inventory/listings.html', array('app' => $app));
+    $app->get('/', function () use ($app, $twig, $netId) {
+        echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId));
     });
 
 });
