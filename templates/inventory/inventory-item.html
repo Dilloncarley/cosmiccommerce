@@ -2,22 +2,46 @@
 
 
 {% block content %}
+<style>
+body{
+  background-image: url("https://wallpapercave.com/wp/wp3255730.jpg");
+}
+</style>
 <div class="container">
- 
+    <div class="row"> 
+        <div class="col s12 m2 ">
+          <h2 class="grey-text center">Mars{{id}}</h2>
+        </div>
+    </div>
     <div class="row">
-        <div class="col s12 m8 offset-m2 center-align ">
-          <div class="welcome-card card blue-grey darken-1 ">
-            <div class="card-content white-text">
-              <span class="card-title">Inventory Item {{id}}</span>
-            
+        <div class="col s12 m6 center-align">
+          <div class="card">
+            <div class="card-image">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg">
             </div>
-            <div class="card-action">
-              <!-- <a href="#">This is a link</a>
-              <a href="#">This is a link</a> -->
-            </div>
+            <div class="card-content">
+                <p>Mars Stuff (sub description)</p>
+              </div>
           </div>
         </div>
+        <div class="col s12 m6">
+            <div class="card-panel blue-grey lighten-2">
+              <h5 class="white-text">Pls buy. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </h5>
+            </div>
+            <h3 class="white-text">$100,000{{idPrice}}
+            <button class="btn waves-effect waves-light purple darken-2" type="submit" name="addCart">Add to Cart
+                <i class="material-icons left">add</i></h3>
+          </div>
+          </div>
       </div>
-</div>
+      <div class="row">
+          <div class="col m12 fixed-action-btn">
+              <a class="btn-floating btn-large waves-effect waves-light red tooltipped" href="/inventory" data-position="right" data-tooltip="Return to listings" >
+                <i class="large material-icons">arrow_back</i>
+              </a>
+      </div>
+    </div>
+
 
 {% endblock %}
