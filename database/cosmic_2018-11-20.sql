@@ -32,8 +32,8 @@ CREATE TABLE `cart_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   KEY `product_id` (`product_id`),
   KEY `id` (`id`),
-  CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `inventory_items` (`product_id`),
-  CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`id`) REFERENCES `users` (`id`)
+  CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `inventory_items` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
