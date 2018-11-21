@@ -28,14 +28,22 @@ $app->get('/logout', function() use ($app, $twig) {
 });
 
 // ADMIN GROUP ROUTES
-$app->group('/admin-dashboard', function () use ($app, $twig) {
+$app->group('/admin-dashboard', function () use ($app, $twig, $db) {
     
     // Inventory group routes
-    $app->group('/inventory', function () use ($app, $twig) {
+    $app->group('/inventory', function () use ($app, $twig, $db) {
 
-        //create item
-        $app->get('/create/item', function () use ($app, $twig) {
+        //create item form
+        $app->get('/create/item', function () use ($app, $twig, $db) {
             echo $twig->render('admin/create-inventory-item.html', array('app' => $app));
+
+        });
+
+        //post created item
+        $app->post('/create/item', function () use ($app, $twig, $db) {
+            require_once('controllers/create-inventory-item.php');
+            echo $twig->render('admin/create-inventory-item.html', array('app' => $app));
+
         });
         // Get item with ID
         $app->get('/view/item/:id', function ($id) use ($app, $twig) {
