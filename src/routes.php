@@ -1,12 +1,47 @@
 <?php 
 session_start();
-$_SESSION['phpCAS']['user'] = "jrs1173"; 
+$_SESSION['phpCAS']['user'] = "dc1829"; 
 $netId = $_SESSION['phpCAS']['user'];
+$userIsAdmin = false;
+//checks if user is logged in and fills the correct admin role
+$authenticateForRole = function ( $isAdmin = true, $netId) {
+    return function () use ( $isAdmin, $netId) {
+        if (!$isAdmin || $netId == null) {
+            $app = \Slim\Slim::getInstance();
+            $req = $app->request;
+            //Get root URI
+            $rootUri = $req->getRootUri();
+            $app->response->redirect($app->urlFor('error', array('err' => 'Sorry, you do not have the right permissions to view this page')));
+
+        }
+    };
+};
+//checks if user is logged in
+$authenticated = function($netId){
+    return function () use ($netId) {
+        if ($netId == null) {
+            $app = \Slim\Slim::getInstance();
+            $req = $app->request;
+            //Get root URI
+            $rootUri = $req->getRootUri();
+            $app->response->redirect($app->urlFor('games.markets', array('game' => $id)));
+            $app->redirect($app->urlFor('home'));
+        }
+    };
+};
 //landing page
-$app->get('/', function () use ($app, $twig) {
-    echo $twig->render('home.html', array('app' => $app));
+$app->get('/', function () use ($app, $twig, $netId) {
+    $allGetVars = $app->request->post();
+
+    echo $twig->render('home.html', array('app' => $app, 'netId' => $netId));
+
 
 })->setName('home');
+
+$app->get('/404/:err', function($err) use ($app, $twig, $netId){
+    echo $twig->render('404.html', array('app' => $app, 'netId' => $netId, 'error' => $err));
+
+})->setName('error');
 
 //login
 $app->get('/login', function() use ($app, $twig) {
@@ -28,13 +63,13 @@ $app->get('/logout', function() use ($app, $twig) {
 });
 
 // ADMIN GROUP ROUTES
-$app->group('/admin-dashboard', function () use ($app, $twig) {
+$app->group('/admin-dashboard', $authenticateForRole($userIsAdmin, $netId), function () use ($app, $twig, $netId) {
     
     // Inventory group routes
     $app->group('/inventory', function () use ($app, $twig) {
 
         //create item
-        $app->get('/create/item', function () use ($app, $twig) {
+        $app->post('/create/item', function () use ($app, $twig) {
             echo $twig->render('admin/create-inventory-item.html', array('app' => $app));
         });
         // Get item with ID
