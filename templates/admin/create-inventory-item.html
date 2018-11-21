@@ -3,51 +3,55 @@
 
 {% block content %}
 <div class="container">
-
+<h1>{{error}}</h1>
   <div class="row">
     <div class="col s12 m8 offset-m2 center-align ">
       <div class="welcome-card card blue-grey lighten-2">
         <div class="card-content white-text">
           <span class="card-title">Create a Inventory Item</span>
         </div>
-        <form class="col s12">
+        <form class="col s12" action="/admin-dashboard/inventory/create/item" method="POST">
           <div class="input-field col s6">
-            <input id="itemName" type="text" class="validate">
+            <input id="itemName" type="text" class="validate" name="itemName">
             <label for="itemName">Name</label>
           </div>
           <div class="input-field col s6">
-            <select multiple>
-              <option value="1">Planets</option>
-              <option value="2">Starships</option>
-              <option value="3">Stars</option>
-              <option value="4">Asteroids</option>
+            <select name="itemType">
+            <option value="1"> </option>>
+              <option value="Planets">Planets</option>
+              <option value="Spacecraft">Spacecraft</option>
+              <option value="Stars">Stars</option>
+              <option value="Asteroids">Asteroids</option>
+              <option value="Misc">Misc.</option>
             </select>
             <label>Type</label>
           </div>
           <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <textarea id="textarea1" class="materialize-textarea" name="itemSubDescrip"></textarea>
             <label for="textarea1">Sub-Description</label>
           </div>
           <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea"></textarea>
-            <label for="textarea1">Description</label>
+            <textarea id="textarea2" class="materialize-textarea" name="itemDescrip"></textarea>
+            <label for="textarea2">Description</label>
           </div>
-          <div class="file-field input-field col s12">
-            <div class="btn blue-grey lighten-2">
-              <span>Image</span>
-              <input type="file">
+          <div class="input-field col s12">
+              <input id="textarea3" class="validate" name="itemURL"></input>
+              <label for="textarea3">Image URL</label>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text">
-            </div>
+          <div class="input-field col s4 left">
+            <input id="itemQuantity" type="text" class="validate" name="itemQuantity">
+            <label for="itemQuantity">Quantity</label>
           </div>
-          <button class="btn waves-effect waves-light blue-grey lighten-2" type="submit" name="action">Add Item
-            <i class="material-icons right">send</i>
-          
+          <div class="input-field col s4">
+            <button class="btn waves-effect waves-light blue-grey lighten-2 right" type="submit" name="action">Add Item
+              <i class="material-icons right">send</i></button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
 
 {% endblock %}
