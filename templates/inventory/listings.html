@@ -3,48 +3,119 @@
 
 {% block content %}
 
+<style>
+  .parallax-container {
+    height: 505px;
+  }
+    #sub-header1{
+      margin-left: 10px;
+    }
+    .activator{
+      position: absolute;
+      top: 10px;
+      right: 0;
+      z-index: 100;
+      color: white;
+    }
+    .badge{
+      float: left !important;
+    }
+  </style>
+
+<!--Pretty image or https://cdn.wallpapersafari.com/1/82/3BRpUF.jpg-->
+<div class="parallax-container">
+  <div class="parallax"><img src="http://www.wallpaperawesome.com/wallpapers-awesome/wallpapers-planets-stars-galaxies-nebulae-sci-fi-awesome/wallpaper-spaceships-near-planet.jpg"></div>
+</div>
+<div class="section white">
+  <div class="row container">
+    <h2 class="header">Current Listings</h2>
+    <p id="sub-header1" class="grey-text text-darken-3 lighten-3 left-align">Browse what we have to offer.</p>
+  </div>
+</div>
+
 <!--Search bar-->
 <div class="row">
-    <form class="col m8 push-m4 s12 push-s3">
-      <div class="row">
-        <div class="input-field col s6">
-          <i class="material-icons prefix">search</i>
-          <input id="icon_prefix" type="text" class="validate">
-          <label for="icon_prefix">search</label>
-        </div>
+  <form class="col m8 push-m2 s12 push-s3">
+    <div class="row">
+      <div class="input-field col s6">
+        <i class="material-icons prefix">search</i>
+        <input id="icon_prefix" type="text" class="validate">
+        <label for="icon_prefix">search</label>
       </div>
-    </form>
+    </div>
+  </form>
+
+
+  <!--Filter Select-->
+  <div class="input-field col m3 pull-m2 push-s4">
+    <select multiple>
+      <option value="1">Planets</option>
+      <option value="2">Spacecraft</option>
+      <option value="3">Stars</option>
+      <option value="4">Asteroids</option>
+      <option value="5">Misc.</option>
+    </select>
+    <label>Filter search</label>
+  </div>
 </div>
+
 
 <!--Inv. Cards-->
 <div class="row">
-        <div class="col s8 m3">
-          <div class="card">
-            <div class="card-image">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg">
-              <span class="card-title">Mars</span>
-              <a onclick="M.toast({html: 'Planetery service added to cart!'})" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add_shopping_cart
-                    </i></a>
-            </div>
-            <div class="card-content">
-              <p>Mars stuff</p>
-            </div>
-          </div>
-        </div>
-        <div class="col s8 m3">
-            <div class="card">
-              <div class="card-image">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg">
-                <span class="card-title">Mars</span>
-                <a onclick="M.toast({html: 'Planetery service added to cart!'})" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add_shopping_cart
-                      </i></a>
-              </div>
-              <div class="card-content">
-                <p>Mars stuff</p>
-              </div>
-            </div>
-          </div>
+    {% for item in items %}
+  <div class="col s12 m4">
+    <div class="card hoverable">
+      
+      <div class="card-image">
+          <i class="material-icons right activator">more_vert</i>
+
+        <img class="materialboxed" src="{{item.product_image}}">
+        
+        <span class="card-title">{{item.item_name}}        
+        </span>
+
+        <form class="item-form" action="" method="POST">
+          <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
+      
+          <input class="hide" name="product_title" value="{{item.item_name}}">
+         
+
+          <a  class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2"><i
+            class="material-icons">add_shopping_cart
+          </i></a>
+        </form>
+        
       </div>
+      <div class="card-content ">
+        <p class="truncate">{{item.sub_descrip}}</p>
+       
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{item.item_name}}<i class="material-icons right">close</i></span>
+            <p>  {{item.sub_descrip}}</p>
+
+          </div>
+          <div class="card-action right-align">
+             <a class="purple-text text-darken-2" href="inventory/view/item/{{item.product_id}}">View</a>
+       
+             <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
+
+
+
+             
+            </div>
+
+     
+    </div>
+  </div>
+  {% endfor %}
+  {% include 'inventory/cart-fab.html' %}
+  <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
+
+</div>
+
+
+
 
 
 
