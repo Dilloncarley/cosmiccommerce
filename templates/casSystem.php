@@ -1,4 +1,5 @@
 <?php
+
     // CAS authentication 
     include_once('../cosmiccommerce/src/auth/inc/CAS/1.3.5/casAuth.php');
 
@@ -20,7 +21,7 @@
         } else {
            //set user_id in session
            $query = "SELECT id FROM users WHERE username = '$netId'";
-           $_SESSION['phpCAS']['user_id'] =  $db->query($query);
+           $_SESSION['user_id'] =  $db->query($query)->fetchColumn();
         }
 
          header("Location: ". $rootUri . "/inventory");
