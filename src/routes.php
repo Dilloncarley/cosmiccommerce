@@ -1,37 +1,9 @@
 <?php 
 session_start();
-$netId = "";
-if($_SERVER['SERVER_NAME'] == "pluto.cse.msstate.edu"){
-    $netId = $_SESSION['phpCAS']['user'];
-    $user_id = $_SESSION['phpCAS']['user_id'];
-} else {
-    $_SESSION['phpCAS']['user'] =  "abc123";
-    $_SESSION['phpCAS']['user_id'] = 1;
-    $netId = $_SESSION['phpCAS']['user'];
-    $user_id = $_SESSION['phpCAS']['user_id'];
-}
-$userIsAdmin = true;
-//checks if user is logged in and fills the correct admin role
-$authenticateForRole = function ($user_id, $db) {
-    return function () use ($user_id, $db) {
-        $query = "SELECT isAdmin FROM users WHERE id = $user_id";
-        $userIsAdmin= $db->query($query)->fetchColumn();
-        if (!$userIsAdmin) {
-            $app = \Slim\Slim::getInstance();
-            $app->response->redirect($app->urlFor('error', array('err' => 'Sorry, you do not have the right permissions to view this page')));
 
-        }
-    };
-};
-//checks if user is logged in
-$authenticated = function($netId){
-    return function () use ($netId) {
-        if ($netId == null) {
-            $app = \Slim\Slim::getInstance();
-            $app->response->redirect('/login');
-        }
-    };
-};
+//all basic logic for authentication on production and local environments
+require_once('auth/authController.php');
+
 //landing page
 $app->get('/', function () use ($app, $twig, $netId) {
     $allGetVars = $app->request->post();
