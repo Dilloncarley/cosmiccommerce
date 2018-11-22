@@ -1,12 +1,22 @@
 <?php 
 session_start();
-$_SESSION['phpCAS']['user'] = "dc1829"; 
-$netId = $_SESSION['phpCAS']['user'];
+$netId = "";
+if($_SERVER['SERVER_NAME'] == "pluto.cse.msstate.edu"){
+    $netId = $_SESSION['phpCAS']['user'];
+    $user_id = $_SESSION['phpCAS']['user_id'];
+} else {
+    $_SESSION['phpCAS']['user'] =  "abc123";
+    $_SESSION['phpCAS']['user_id'] = 1;
+    $netId = $_SESSION['phpCAS']['user'];
+    $user_id = $_SESSION['phpCAS']['user_id'];
+}
 $userIsAdmin = true;
 //checks if user is logged in and fills the correct admin role
-$authenticateForRole = function ( $isAdmin = true, $netId) {
-    return function () use ( $isAdmin, $netId) {
-        if (!$isAdmin || $netId == null) {
+$authenticateForRole = function ($user_id, $db) {
+    return function () use ($user_id, $db) {
+        $query = "SELECT isAdmin FROM users WHERE id = $user_id";
+        $userIsAdmin= $db->query($query)->fetchColumn();
+        if (!$userIsAdmin) {
             $app = \Slim\Slim::getInstance();
             $app->response->redirect($app->urlFor('error', array('err' => 'Sorry, you do not have the right permissions to view this page')));
 
@@ -37,26 +47,28 @@ $app->get('/404/:err', function($err) use ($app, $twig, $netId){
 })->setName('error');
 
 //login
-$app->get('/login', function() use ($app, $twig) {
+$app->get('/login', function() use ($app, $twig, $db) {
 
     //auth through CAS system
-    echo $app->render('casSystem.php', array('app' => $app));
+    echo $app->render('casSystem.php', array('app' => $app, 'db' => $db));
   
 });
 
 //logout
 $app->get('/logout', function() use ($app, $twig) {
-    $_SESSION['phpCAS']['user'] = null;
-    $req = $app->request;
+    // remove all session variables
+    session_unset(); 
 
-    //Get root URI
-    $rootUri = $req->getRootUri();
-    $app->response->redirect( $rootUri );
+    // destroy the session 
+    session_destroy(); 
+    
+    $app->response->redirect($app->urlFor('home'));
+
 
 });
 
 // ADMIN GROUP ROUTES
-$app->group('/admin-dashboard', $authenticateForRole($userIsAdmin, $netId), function () use ($app, $twig, $netId, $db) {
+$app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($user_id, $db), function () use ($app, $twig, $netId, $db) {
     
     // Inventory group routes
     $app->group('/inventory', function () use ($app, $twig, $db, $netId) {
