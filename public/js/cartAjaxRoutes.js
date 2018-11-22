@@ -16,9 +16,22 @@
                          console.log(res)
                           M.toast({html: 'Something went wrong!', classes: 'failure-toast'}) 
                             break;
-                    
+                        case "3":
+                          M.toast({html: 'Sorry that item is out of stock!', classes: 'failure-toast'}) 
+
+                          e.currentTarget.classList.add("disabled");
+                          var cardActionSection = e.currentTarget.offsetParent.offsetParent.getElementsByClassName("card-action")[0];
+                          var outOfStockBadge = '<span class="new badge red darken-2" data-badge-caption="out of stock"></span>';
+                          cardActionSection.innerHTML =  cardActionSection.innerHTML + outOfStockBadge;
+
+                          console.log(cardActionSection)
+                            break;
                         default:
-                        console.log(res)
+                          var cartNotificationCount = document.getElementById('items-notification').getAttribute("data-badge-caption");
+                          var test = parseInt(cartNotificationCount)
+                          console.log(test)
+                          var cartNotification = document.getElementById('items-notification').setAttribute("data-badge-caption",  test +1 );
+
                            M.toast({html: 'Item Added to Cart!', classes: 'success-toast'})
 
                             break;
