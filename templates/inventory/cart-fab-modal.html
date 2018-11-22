@@ -1,0 +1,46 @@
+<style>
+    #items-notification{
+      position: relative;
+      left: 55px;
+      z-index: 100;
+      min-width: 0 !important;
+      border-radius: 50% !important;
+    }
+  </style>
+ 
+ <!-- Modal Structure -->
+ <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Items in Your Cart</h4>
+     
+    
+      {% set count = 0 %}
+    
+      <ul class="collection">
+            {% for item in cartItems %}
+            {% set count = count + item.amount %}
+            <li class="collection-item avatar">
+            <img src="{{item.product_image}}" alt="" class="circle materialboxed">
+
+              <span class="title"> {{item.item_name}}</span>
+              <p class="truncate">{{item.sub_descrip}}</p>
+              <p><span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span></p>
+                <p class="right">{{item.amount}}</p>
+              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+            </li>
+            {% endfor %}   
+          </ul>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
+    </div>
+  </div>
+
+  <div class="fixed-action-btn">
+      <button data-target="modal1" class="btn-floating btn-large waves-effect waves-light purple darken-2 tooltipped modal-trigger"  data-position="left" data-tooltip="View cart items" >
+        <i class="large material-icons">shopping_cart</i>
+      </button>
+      <span id="items-notification" class="new badge red darken-2 " data-badge-caption=" {{ count }}"></span>
+
+    
+    </div>
