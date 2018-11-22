@@ -7,7 +7,7 @@
                 var productId = currentObject.product_id.value;
                 $.ajax({
                 type: 'post',
-                url: '/cart/add/item/' + productId,
+                url: './cart/add/item/' + productId,
                 data: $('.item-form').serialize(),
                 success: function (res) {
                    
