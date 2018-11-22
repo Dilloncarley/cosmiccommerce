@@ -2,15 +2,12 @@
 session_start();
 $_SESSION['phpCAS']['user'] = "dc1829"; 
 $netId = $_SESSION['phpCAS']['user'];
-$userIsAdmin = false;
+$userIsAdmin = true;
 //checks if user is logged in and fills the correct admin role
 $authenticateForRole = function ( $isAdmin = true, $netId) {
     return function () use ( $isAdmin, $netId) {
         if (!$isAdmin || $netId == null) {
             $app = \Slim\Slim::getInstance();
-            $req = $app->request;
-            //Get root URI
-            $rootUri = $req->getRootUri();
             $app->response->redirect($app->urlFor('error', array('err' => 'Sorry, you do not have the right permissions to view this page')));
 
         }
@@ -21,11 +18,7 @@ $authenticated = function($netId){
     return function () use ($netId) {
         if ($netId == null) {
             $app = \Slim\Slim::getInstance();
-            $req = $app->request;
-            //Get root URI
-            $rootUri = $req->getRootUri();
-            $app->response->redirect($app->urlFor('games.markets', array('game' => $id)));
-            $app->redirect($app->urlFor('home'));
+            $app->response->redirect($app->urlFor('error', array('err' => 'Sorry, you are not logged in!')));
         }
     };
 };
@@ -63,16 +56,14 @@ $app->get('/logout', function() use ($app, $twig) {
 });
 
 // ADMIN GROUP ROUTES
-$app->group('/admin-dashboard', $authenticateForRole($userIsAdmin, $netId), function () use ($app, $twig, $netId) {
+$app->group('/admin-dashboard', $authenticateForRole($userIsAdmin, $netId), function () use ($app, $twig, $netId, $db) {
     
     // Inventory group routes
-    $app->group('/inventory', function () use ($app, $twig, $db) {
+    $app->group('/inventory', function () use ($app, $twig, $db, $netId) {
 
-        //create item
-        $app->post('/create/item', function () use ($app, $twig) {
         //create item form
-        $app->get('/create/item', function () use ($app, $twig, $db) {
-            echo $twig->render('admin/create-inventory-item.html', array('app' => $app));
+        $app->get('/create/item', function () use ($app, $twig, $db, $netId) {
+            echo $twig->render('admin/create-inventory-item.html', array('app' => $app, 'netId' => $netId));
 
         });
 
@@ -83,8 +74,8 @@ $app->group('/admin-dashboard', $authenticateForRole($userIsAdmin, $netId), func
 
         });
         // Get item with ID
-        $app->get('/view/item/:id', function ($id) use ($app, $twig) {
-            echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'id' => $id));
+        $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId) {
+            echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'id' => $id, 'netId' => $netId));
         });
 
         // Update item with ID
@@ -95,29 +86,20 @@ $app->group('/admin-dashboard', $authenticateForRole($userIsAdmin, $netId), func
         // Delete item with ID
         $app->delete('/delete/item/:id', function ($id) {
 
-        });
-
-        //base list all inventory items for ADMIN
-        $app->get('/', function () use ($app, $twig) {
-            echo $twig->render('inventory/listings.html', array('app' => $app));
-        });
-
+        }); 
     });
-
-    //base ADMIN dashboard
-    $app->get('/', function () use ($app, $twig) {
-        echo $twig->render('admin/admin-dashboard.html', array('app' => $app));
+     //base list all inventory items for ADMIN
+     $app->get('/', function () use ($app, $twig, $netId) {
+        echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId));
     });
-
 });
-
 //Regular authenticated and guest user inventory group routes
 $app->group('/inventory', function () use ($app, $twig, $netId) {
 
    
      // View item with ID
-     $app->get('/view/item/:id', function ($id) use ($app, $twig) {
-        echo $twig->render('inventory/inventory-item.html', array('app' => $app));
+     $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId) {
+        echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'netId' => $netId));
     });
 
     //Base listings page
