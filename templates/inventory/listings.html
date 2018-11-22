@@ -79,8 +79,8 @@
       
           <input class="hide" name="product_title" value="{{item.item_name}}">
          
-
-          <a  class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2"><i
+         
+          <a  class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
             class="material-icons">add_shopping_cart
           </i></a>
         </form>
@@ -95,12 +95,14 @@
             <p>  {{item.sub_descrip}}</p>
 
           </div>
-          <div class="card-action right-align">
+          <div class="card-action right-align act">
              <a class="purple-text text-darken-2" href="inventory/view/item/{{item.product_id}}">View</a>
        
              <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
 
-
+             {% if item.quantity == 0 %}   
+                  <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
+             {% endif %}
 
              
             </div>
