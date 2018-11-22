@@ -110,11 +110,12 @@ $app->group('/inventory', function () use ($app, $twig, $netId) {
 });
 
 //Regular authenticated user cart group routes (guests will have to auth if they want to add items to cart)
-$app->group('/cart', $authenticated($netId), function () use ($app, $twig, $netId) {
+$app->group('/cart', $authenticated($netId), function () use ($app, $twig, $netId, $db) {
 
     //Add item to cart
-    $app->post('/add/cart/item', function () use ($app, $twig) {
-    echo $twig->render('admin/create-inventory-item.html', array('app' => $app));
+    $app->post('/add/item/:id', function ($id) use ($app, $twig, $db) {
+        require_once('controllers/add-item-to-cart.php');
+
     });
 
     // Update item in cart
