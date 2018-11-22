@@ -94,17 +94,17 @@ $app->group('/admin-dashboard', $authenticateForRole($userIsAdmin, $netId), func
     });
 });
 //Regular authenticated and guest user inventory group routes
-$app->group('/inventory', function () use ($app, $twig, $netId) {
+$app->group('/inventory', function () use ($app, $twig, $netId, $db) {
 
    
      // View item with ID
-     $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId) {
+     $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId, $db) {
         echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'netId' => $netId));
     });
 
     //Base listings page
-    $app->get('/', function () use ($app, $twig, $netId) {
-        echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId));
+    $app->get('/', function () use ($app, $twig, $netId, $db) {
+        require_once('controllers/inventory/list-inventory-items.php');
     });
 
 });
@@ -114,7 +114,7 @@ $app->group('/cart', $authenticated($netId), function () use ($app, $twig, $netI
 
     //Add item to cart
     $app->post('/add/item/:id', function ($id) use ($app, $twig, $db) {
-        require_once('controllers/add-item-to-cart.php');
+        require_once('controllers/cart/add-item-to-cart.php');
 
     });
 
