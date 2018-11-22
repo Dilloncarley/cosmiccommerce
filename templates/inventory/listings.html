@@ -10,6 +10,16 @@
     #sub-header1{
       margin-left: 10px;
     }
+    .activator{
+      position: absolute;
+      top: 10px;
+      right: 0;
+      z-index: 100;
+      color: white;
+    }
+    .badge{
+      float: left !important;
+    }
   </style>
 
 <!--Pretty image or https://cdn.wallpapersafari.com/1/82/3BRpUF.jpg-->
@@ -52,43 +62,60 @@
 
 <!--Inv. Cards-->
 <div class="row">
-  <div class="col s8 m3">
-    <div class="card">
+    {% for item in items %}
+  <div class="col s12 m4">
+    <div class="card hoverable">
+      
       <div class="card-image">
-        <img class="materialboxed" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg">
-        <span class="card-title">Mars</span>
-        <a onclick="M.toast({html: 'Planetery service added to cart!'})" class="btn-floating halfway-fab waves-effect waves-light red"><i
+          <i class="material-icons right activator">more_vert</i>
+
+        <img class="materialboxed" src="{{item.product_image}}">
+        
+        <span class="card-title">{{item.item_name}}        
+        </span>
+
+        <form class="item-form" action="" method="POST">
+          <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
+      
+          <input class="hide" name="product_title" value="{{item.item_name}}">
+         
+
+          <a  class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2"><i
             class="material-icons">add_shopping_cart
           </i></a>
+        </form>
+        
       </div>
-      <div class="card-content">
-        <p>Mars stuff</p>
-      </div>
-      <div class="card-action">
-          <a href="inventory/view/item/:id">View</a>
+      <div class="card-content ">
+        <p class="truncate">{{item.sub_descrip}}</p>
+       
         </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{item.item_name}}<i class="material-icons right">close</i></span>
+            <p>  {{item.sub_descrip}}</p>
+
+          </div>
+          <div class="card-action right-align">
+             <a class="purple-text text-darken-2" href="inventory/view/item/{{item.product_id}}">View</a>
+       
+             <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
+
+
+
+             
+            </div>
+
+     
     </div>
   </div>
-  <div class="col s8 m3">
-    <div class="card">
-      <div class="card-image">
-        <img class="materialboxed" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg">
-        <span class="card-title">Mars</span>
-        <a onclick="M.toast({html: 'Planetery service added to cart!'})" class="btn-floating halfway-fab waves-effect waves-light red"><i
-            class="material-icons">add_shopping_cart
-          </i></a>
-      </div>
-      <div class="card-content">
-        <p>Mars stuff</p>
-      </div>
-      <div class="card-action">
-          <a href="inventory/view/item/:id">View</a>
-        </div>
-    </div>
-  </div>
+  {% endfor %}
   {% include 'inventory/cart-fab.html' %}
+  <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
 
 </div>
+
+
+
 
 
 
