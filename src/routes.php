@@ -18,7 +18,7 @@ $authenticated = function($netId){
     return function () use ($netId) {
         if ($netId == null) {
             $app = \Slim\Slim::getInstance();
-            $app->response->redirect($app->urlFor('error', array('err' => 'Sorry, you are not logged in!')));
+            $app->response->redirect('/login');
         }
     };
 };
@@ -110,7 +110,7 @@ $app->group('/inventory', function () use ($app, $twig, $netId) {
 });
 
 //Regular authenticated user cart group routes (guests will have to auth if they want to add items to cart)
-$app->group('/cart', function () use ($app, $twig) {
+$app->group('/cart', $authenticated($netId), function () use ($app, $twig, $netId) {
 
     //Add item to cart
     $app->post('/add/cart/item', function () use ($app, $twig) {
@@ -126,7 +126,10 @@ $app->group('/cart', function () use ($app, $twig) {
     $app->delete('/delete/cart/item/:id', function ($id) {
 
     });
-
+ //Add item to cart
+ $app->get('/', function () use ($app, $twig) {
+    echo $twig->render('admin/create-inventory-item.html', array('app' => $app));
+    });
 });
 
 
