@@ -74,9 +74,18 @@
       <div class="card-image">
         <img class="materialboxed" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg">
         <span class="card-title">Mars</span>
-        <a onclick="M.toast({html: 'Planetery service added to cart!'})" class="btn-floating halfway-fab waves-effect waves-light red"><i
+        <form class="item-form" action="" method="POST">
+          <input class="hide" id="product_id" name="product_id" value="1">
+          <input class="hide" name="amount" value="1">
+          <input class="hide" name="user_id" value="1">
+          <input class="hide" name="product_title" value="mars">
+         
+
+          <a  class="add-to-cart btn-floating halfway-fab waves-effect waves-light red"><i
             class="material-icons">add_shopping_cart
           </i></a>
+        </form>
+        
       </div>
       <div class="card-content">
         <p>Mars stuff</p>
@@ -87,6 +96,7 @@
     </div>
   </div>
   {% include 'inventory/cart-fab.html' %}
+  <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
 
 </div>
 
