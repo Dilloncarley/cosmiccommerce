@@ -28,19 +28,31 @@
     
         <body>
             <nav>
-                <div class="nav-wrapper blue-grey darken-4">
-                  <a href="{{app.request.getRootUri}}" class="brand-logo center">Cosmic Commerce</a>
-                  <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    {% if netId %}
-                      <li>{{netId}}</li>
-                      <li><a href="{{app.request.getRootUri}}/logout">Logout</a></li>
- 
-                    {% else %}
-                    <li><a href="{{app.request.getRootUri}}/login">Login</a></li>
-                    {% endif %}
-                  </ul>
-                </div>
-              </nav>
+                  <div class="nav-wrapper blue-grey darken-4">
+                    <a href="{{app.request.getRootUri}}" class="brand-logo center">Cosmic Commerce</a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                      {% if netId %}
+                        <li>{{netId}}</li>
+                        <li><a href="{{app.request.getRootUri}}/logout">Logout</a></li>
+   
+                      {% else %}
+                      <li><a href="{{app.request.getRootUri}}/login">Login</a></li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </nav>
+            
+              <ul class="sidenav" id="mobile-demo">
+                  {% if netId %}
+                  <li class="center-align">{{netId}}</li>
+                  <li><a href="{{app.request.getRootUri}}/logout">Logout</a></li>
+
+                {% else %}
+                <li><a href="{{app.request.getRootUri}}/login">Login</a></li>
+                {% endif %}
+              </ul>
+           
         <div id="content">{% block content %}{% endblock %}</div>
       
         </body>
