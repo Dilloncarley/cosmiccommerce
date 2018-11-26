@@ -40,7 +40,7 @@ $app->get('/logout', function() use ($app, $twig) {
 });
 
 // ADMIN GROUP ROUTES
-$app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($user_id, $db), function () use ($app, $twig, $netId, $db) {
+$app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($user_id, $db), function () use ($app, $twig, $netId, $user_id, $db) {
     
     // Inventory group routes
     $app->group('/inventory', function () use ($app, $twig, $db, $netId) {
@@ -73,8 +73,9 @@ $app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($us
         }); 
     });
      //base list all inventory items for ADMIN
-     $app->get('/', function () use ($app, $twig, $netId) {
-        echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId));
+     $app->get('/', function () use ($app, $twig, $netId, $user_id, $db) {
+        require_once('controllers/cart/list-items-in-cart.php');
+        require_once('controllers/inventory/list-inventory-items.php');
     });
 });
 //Regular authenticated and guest user inventory group routes
