@@ -58,7 +58,7 @@
     <label>Filter search</label>
   </div>
 </div>
-
+ 
 
 <!--Inv. Cards-->
 <div class="row">
@@ -98,11 +98,12 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{item.item_name}}<i class="material-icons right">close</i></span>
-            <p>  {{item.sub_descrip}}</p>
+            <p>  {{item.sub_descrip}} </p>
 
           </div>
+          
           <div class="card-action right-align act">
-             <a class="purple-text text-darken-2" href="inventory/view/item/{{item.product_id}}">View</a>
+             <a class="purple-text text-darken-2" href="/inventory/view/item/{{item.product_id}}">View</a>
        
              <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
 
@@ -117,13 +118,29 @@
     </div>
   </div>
   {% endfor %}
+
+  <!--Add inventory item-->
+  {% if isAdmin %}
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating tooltipped btn-large purple darken-2 waves-effect waves-light left" data-position="left" 
+    data-tooltip="Add inventory item" href="/admin-dashboard/inventory/create/item">
+      <i class="large material-icons">add</i>
+    </a>
+    <ul>
+      <li>{% include 'inventory/admin-cart-fab-modal.html' %}</li>
+    </ul>
+  </div>
+
+{% else %}
  
-  {% include 'inventory/cart-fab-modal.html' %}
-  
+{% include 'inventory/cart-fab-modal.html' %}
+
+
+{% endif %}
   <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
 
 </div>
-
 
 
 

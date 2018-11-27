@@ -53,13 +53,14 @@ $app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($us
 
         //post created item
         $app->post('/create/item', function () use ($app, $twig, $db) {
-            require_once('controllers/create-inventory-item.php');
-            echo $twig->render('admin/create-inventory-item.html', array('app' => $app));
+            require_once('controllers/inventory/create-inventory-item.php');
+            echo $twig->render('inventory/view/item/{{item.product_id}}', array('app' => $app));
 
         });
         // Get item with ID
-        $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId) {
+        $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId, $db) {
             echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'id' => $id, 'netId' => $netId));
+            
         });
 
         // Update item with ID
@@ -76,21 +77,28 @@ $app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($us
      $app->get('/', function () use ($app, $twig, $netId, $user_id, $db) {
         require_once('controllers/cart/list-items-in-cart.php');
         require_once('controllers/inventory/list-inventory-items.php');
+        echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId, 
+        'items' => $items, 'cartItems' => $cartItems, 'isAdmin' => true));
     });
 });
 //Regular authenticated and guest user inventory group routes
 $app->group('/inventory', function () use ($app, $twig, $netId, $user_id, $db) {
 
-   
      // View item with ID
-     $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId, $db) {
-        echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'netId' => $netId));
+     $app->get('/view/item/:id', function ($id) use ($app, $twig, $user_id, $netId, $db) {
+        require_once('controllers/cart/list-items-in-cart.php');
+        require_once('controllers/inventory/display-item.php');
+        echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'netId' => $netId,  
+        'individualItem' => $individualItem, 'cartItems' => $cartItems));
     });
+
 
     //Base listings page
     $app->get('/', function () use ($app, $twig, $netId, $user_id, $db) {
         require_once('controllers/cart/list-items-in-cart.php');
         require_once('controllers/inventory/list-inventory-items.php');
+        echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId, 
+        'items' => $items, 'cartItems' => $cartItems));
         
     });
 
