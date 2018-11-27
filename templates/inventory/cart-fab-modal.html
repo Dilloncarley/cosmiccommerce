@@ -1,11 +1,11 @@
 <style>
-    #items-notification{
+    /* #items-notification{
       position: relative;
       left: 55px;
       z-index: 100;
       min-width: 0 !important;
       border-radius: 50% !important;
-    }
+    } */
   </style>
  
  <!-- Modal Structure -->
@@ -35,12 +35,12 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
     </div>
   </div>
-
+  <div class="row">
   <div class="fixed-action-btn">
+      <span id="items-notification" class="new badge red darken-2 " data-badge-caption=" {{ count }}"></span> 
       <button data-target="modal1" class="btn-floating btn-large waves-effect waves-light purple darken-2 tooltipped modal-trigger"  data-position="left" data-tooltip="View cart items" >
         <i class="large material-icons">shopping_cart</i>
       </button>
-      <span id="items-notification" class="new badge red darken-2 " data-badge-caption=" {{ count }}"></span>
-
-    
+      
+    </div>
     </div>
