@@ -1,23 +1,32 @@
 {% extends "layout.html" %}
 
-
 {% block content %}
 <div class="container">
-<h1>{{error}}</h1>
+  <h1>{{error}}</h1>
   <div class="row">
     <div class="col s12 m8 offset-m2 center-align ">
       <div class="welcome-card card blue-grey lighten-2">
         <div class="card-content white-text">
+          {% if updating %}
+          <span class="card-title">Edit an Inventory Item</span>
+          {% else %}
           <span class="card-title">Create a Inventory Item</span>
+          {% endif %}
         </div>
-        <form class="col s12" action="/admin-dashboard/inventory/create/item" method="POST">
+
+        {% if updating %}
+        {% for item in individualItem %}
+
+        <!--UPDATE FORM-->
+        <form class="col s12" action="/admin-dashboard/inventory/update/item/{{product_id}}" method="POST">
           <div class="input-field col s6">
-            <input id="itemName" type="text" class="validate" name="itemName">
+            <input id="itemName" type="text" class="validate" {% if updating %} value="{{item.item_name}}" {% endif %}
+              name="itemName" required>
             <label for="itemName">Name</label>
           </div>
           <div class="input-field col s6">
             <select name="itemType">
-            <option value="1"> </option>>
+              <option value="1">{{item.item_type}} </option>>
               <option value="Planets">Planets</option>
               <option value="Spacecraft">Spacecraft</option>
               <option value="Stars">Stars</option>
@@ -27,32 +36,80 @@
             <label>Type</label>
           </div>
           <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea" name="itemSubDescrip"></textarea>
+            <textarea id="textarea1" class="materialize-textarea" name="itemSubDescrip" required>{{item.sub_descrip}}</textarea>
             <label for="textarea1">Sub-Description</label>
           </div>
           <div class="input-field col s12">
-            <textarea id="textarea2" class="materialize-textarea" name="itemDescrip"></textarea>
+            <textarea id="textarea2" class="materialize-textarea" name="itemDescrip" required>{{item.main_descrip}}</textarea>
             <label for="textarea2">Description</label>
           </div>
           <div class="input-field col s12">
-              <input id="textarea3" class="validate" name="itemURL"></input>
-              <label for="textarea3">Image URL</label>
-            </div>
+            <textarea id="textarea3" class="materialize-textarea" name="itemURL" required>{{item.product_image}}</textarea>
+            <label for="textarea3">Image URL</label>
+          </div>
           <div class="input-field col s4 left">
-            <input id="itemQuantity" type="text" class="validate" name="itemQuantity">
+            <input id="itemQuantity" type="text" class="validate" name="itemQuantity" value="{{item.quantity}}"
+              required>
+            <label for="itemQuantity">Quantity</label>
+
+          </div>
+          <div class="input-field col s4">
+            <!-- <a href="/admin-dashboard/inventory/update/item/{{item.product_id}}"> -->
+            <button class="btn waves-effect waves-light blue-grey lighten-2" type="submit" name="action">Update Item
+              <i class="material-icons right">send</i></button></a>
+          </div>
+        </form>
+
+        {% endfor %}
+        {% else %}
+
+        <!--CREATE FORM-->
+        <form class="col s12" action="/admin-dashboard/inventory/create/item" method="POST">
+          <div class="input-field col s6">
+
+            <input id="itemName" type="text" class="validate" name="itemName" required>
+
+            <label for="itemName">Name</label>
+          </div>
+
+          <div class="input-field col s6">
+            <select name="itemType">
+              <option value="Planets">Planets</option>>
+              <option value="Spacecraft">Spacecraft</option>
+              <option value="Stars">Stars</option>
+              <option value="Asteroids">Asteroids</option>
+              <option value="Misc">Misc.</option>
+            </select>
+            <label>Type</label>
+          </div>
+          <div class="input-field col s12">
+            <textarea id="textarea1" class="materialize-textarea" name="itemSubDescrip" value="test" required></textarea>
+            <label for="textarea1">Sub-Description</label>
+          </div>
+          <div class="input-field col s12">
+            <textarea id="textarea2" class="materialize-textarea" name="itemDescrip" required></textarea>
+            <label for="textarea2">Description</label>
+          </div>
+          <div class="input-field col s12">
+            <textarea id="textarea3" class="materialize-textarea" name="itemURL" required></textarea>
+            <label for="textarea3">Image URL</label>
+          </div>
+          <div class="input-field col s4 left">
+            <input id="itemQuantity" type="text" class="validate" name="itemQuantity" required>
             <label for="itemQuantity">Quantity</label>
           </div>
           <div class="input-field col s4">
-            <a href="inventory/view/item/{{item.product_id}}">
+            <!-- <a href="inventory/view/item/{{item.product_id}}"> -->
             <button class="btn waves-effect waves-light blue-grey lighten-2 right" type="submit" name="action">Add Item
               <i class="material-icons right">send</i></button></a>
           </div>
         </form>
+
+        {% endif %}
+
       </div>
     </div>
   </div>
 </div>
-
-
 
 {% endblock %}
