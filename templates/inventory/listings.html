@@ -21,6 +21,12 @@
       float: left !important;
     }
 
+    .materialboxed{
+    position: relative;
+    width: 400px !important;
+    height: 270px !important;
+    }
+
     
   </style>
 
@@ -46,7 +52,6 @@
     </div>
 
   </form>
-
 
   <!--Filter Select-->
   <div class="input-field col m3 push-m2 s12">
@@ -93,7 +98,8 @@
 
       {% if isAdmin %}
       <div class="fixed-action-btn3" style="position:relative; bottom:0px; right:45px">
-        <a class="btn-floating waves-effect halfway-fab waves-light green"><i class="material-icons">edit</i></a>
+        <a class="btn-floating waves-effect halfway-fab waves-light green" href="/admin-dashboard/inventory/update/item/{{item.product_id}}"
+        ><i class="material-icons">edit</i></a>
       </div>
 
       <div class="fixed-action-btn2" style="position:relative; bottom:0px; right:90px">
