@@ -20,10 +20,26 @@
     .badge{
       float: left !important;
     }
+
+    .materialboxed{
+    position: relative;
+    width: 400px !important;
+    height: 270px !important;
+    }
+
+    
   </style>
 
 <!--Pretty image or https://cdn.wallpapersafari.com/1/82/3BRpUF.jpg-->
 <div class="parallax-container">
+    <style>
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+    <img src="https://i.imgur.com/3DnBCl5.png" width = "780" >
   <div class="parallax"><img src="http://www.wallpaperawesome.com/wallpapers-awesome/wallpapers-planets-stars-galaxies-nebulae-sci-fi-awesome/wallpaper-spaceships-near-planet.jpg"></div>
 </div>
 <div class="section white">
@@ -35,16 +51,15 @@
 
 <!--Search bar-->
 <div class="row">
-  <form >
-   
-      <div class="input-field col m4 push-m2 s12 ">
-        <i class="material-icons prefix">search</i>
-        <input id="icon_prefix" type="text" class="validate">
-        <label for="icon_prefix">search</label>
-      </div>
- 
-  </form>
+  <form>
 
+    <div class="input-field col m4 push-m2 s12 ">
+      <i class="material-icons prefix">search</i>
+      <input id="icon_prefix" type="text" class="validate">
+      <label for="icon_prefix">search</label>
+    </div>
+
+  </form>
 
   <!--Filter Select-->
   <div class="input-field col m3 push-m2 s12">
@@ -62,68 +77,95 @@
 
 <!--Inv. Cards-->
 <div class="row">
-    {% for item in items %}
+  {% for item in items %}
   <div class="col s12 m4">
     <div class="card hoverable">
-      
       <div class="card-image">
-          <i class="material-icons right activator">more_vert</i>
-
+        <i class="material-icons right activator">more_vert</i>
         <img class="materialboxed" src="{{item.product_image}}">
-        
-        <span class="card-title">{{item.item_name}}        
+        <span class="card-title">{{item.item_name}}
         </span>
+        <div class="fixed-action-btn1" style="position:relative;">
 
-        <form class="item-form" action="" method="POST">
-          <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
-      
-          <input class="hide" name="product_title" value="{{item.item_name}}">
-         
-          {% if netId %} 
-          <a  class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
-            class="material-icons">add_shopping_cart
-          </i></a>
-       
-          {% else %}
-          <a  href="{{app.request.getRootUri}}/login" class="btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
-            class="material-icons">add_shopping_cart
-          </i></a>
-          {% endif %}
-        </form>
-        
-      </div>
-      <div class="card-content ">
-        <p class="truncate">{{item.sub_descrip}}</p>
-       
+          <form class="item-form" action="" method="POST">
+            <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
+
+            <input class="hide" name="product_title" value="{{item.item_name}}">
+
+            {% if netId %}
+            <a class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
+                class="material-icons">add_shopping_cart
+              </i></a>
+            </form>
         </div>
-        <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">{{item.item_name}}<i class="material-icons right">close</i></span>
-            <p>  {{item.sub_descrip}}</p>
+        {% else %}
+        <a href="{{app.request.getRootUri}}/login" class="btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
+            class="material-icons">add_shopping_cart
+          </i></a>
+      </div>
+    
+      {% endif %}
 
-          </div>
-          <div class="card-action right-align act">
-             <a class="purple-text text-darken-2" href="inventory/view/item/{{item.product_id}}">View</a>
-       
-             <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
+      {% if isAdmin %}
+      <div class="fixed-action-btn3" style="position:relative; bottom:0px; right:45px">
+        <a class="btn-floating waves-effect halfway-fab waves-light green" href="/admin-dashboard/inventory/update/item/{{item.product_id}}"
+        ><i class="material-icons">edit</i></a>
+      </div>
+      <div class="fixed-action-btn2" style="position:relative; bottom:0px; right:90px">
+          <form class="delete-form" action="/admin-dashboard/inventory/delete/item/{{item.product_id}}" method="POST">
+        <button class="btn-floating waves-effect halfway-fab waves-light red" type="submit">
+          <i class="material-icons">remove</i></button>
+          </form>
 
-             {% if item.quantity == 0 %}   
-                  <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
-             {% endif %}
+      </div>
 
-             
-            </div>
+      {% endif %}
 
-     
+
+    </div>
+    <div class="card-content ">
+      <p class="truncate">{{item.sub_descrip}}</p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">{{item.item_name}}<i class="material-icons right">close</i></span>
+      <p> {{item.sub_descrip}} </p>
+    </div>
+    <div class="card-action right-align act">
+      <a class="purple-text text-darken-2" href="/inventory/view/item/{{item.product_id}}">View</a>
+
+      <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
+
+      {% if item.quantity == 0 %}
+      <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
+      {% endif %}
     </div>
   </div>
-  {% endfor %}
- 
-  {% include 'inventory/cart-fab-modal.html' %}
-  
-  <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
+</div>
+{% endfor %}
 
+<!--Add inventory item-->
+{% if isAdmin %}
+
+<div class="fixed-action-btn">
+  <a class="btn-floating tooltipped btn-large purple darken-2 waves-effect waves-light left" data-position="left"
+    data-tooltip="Add inventory item" href="/admin-dashboard/inventory/create/item">
+    <i class="large material-icons">add</i>
+  </a>
+  <ul>
+    <li>{% include 'inventory/admin-cart-fab-modal.html' %}</li>
+  </ul>
 </div>
 
+{% else %}
+
+{% include 'inventory/cart-fab-modal.html' %}
+
+
+{% endif %}
+<script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
+
+
+</div>
 
 
 

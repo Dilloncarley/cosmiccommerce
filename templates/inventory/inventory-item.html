@@ -6,37 +6,48 @@
   body{
   background-image: url("https://wallpapercave.com/wp/wp3255730.jpg");
   }
+  #item_tag{
+    margin-top: 25px;
+  }
+
 </style>
 <div class="container">
   <div class="row">
-    <div class="col s12 m2 ">
-      <h2 class="white-text center">Mars{{id}}</h2>
+    {% for item in individualItem %}
+    <div class="col s12 m12">
+
+      <h2 class="white-text left">
+        <div>
+          <span class="new badge purple darken-2 valign-wrapper" id="item_tag" data-badge-caption="{{item.item_type}}">
+          </span>{{item.item_name}}</div>
+      </h2>
     </div>
   </div>
   <div class="row">
     <div class="col s12 m6 center-align">
       <div class="card">
         <div class="card-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg">
+          <img src="{{item.product_image}}">
         </div>
         <div class="card-content">
-          <p>Mars Stuff (sub description)</p>
+          <p>{{item.sub_descrip}}</p>
         </div>
       </div>
     </div>
     <div class="col s12 m6">
       <div class="card">
-        <div class="card-panel opacity blue-grey darken-4" style="opacity:80%;">
-          <h5 class="white-text">Pls buy. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat.
+        <div class="card-panel opacity blue-grey darken-4">
+          <h5 class="white-text">{{item.main_descrip}}
           </h5>
           <div class="card-action">
             <h4 class="white-text">$100,000{{idPrice}}
-              <button class="btn waves-effect waves-light purple darken-2" type="submit" name="addCart">Add to Cart
-                <i class="material-icons left">add</i></h4>
-            <h5 class="white-text center">{{idQuantity}}5 left in stock!</h5>
+              {% if item.quantity == 0 %}
+              <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
+              {% else %}
+              <button class="add-to-cart btn waves-effect waves-light purple darken-2" type="submit" name="addCart">Add to Cart
+                <i class="material-icons left">add</i></h4></button>
+            <h5 class="white-text center">{{item.quantity}} left in stock!</h5>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -51,6 +62,9 @@
     </a>
   </div>
 </div>
+ 
+{% endfor %}
+
 {% include 'inventory/cart-fab-modal.html' %}
 
 
