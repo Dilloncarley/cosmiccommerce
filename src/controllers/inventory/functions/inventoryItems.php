@@ -8,7 +8,7 @@
     }
 
     function individualInventoryItems($id, $db){
-        $query = "SELECT item_name, quantity, product_image, main_descrip, sub_descrip, item_type
+        $query = "SELECT item_name, quantity, product_image, main_descrip, sub_descrip, item_type, price
          FROM inventory_items WHERE product_id = $id";
 
         $displayInventoryItem = $db->query($query);
