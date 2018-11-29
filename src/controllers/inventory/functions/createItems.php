@@ -9,10 +9,4 @@
         //$error = $db->errorInfo(); view sql errors
         //print_r($error);
     }
-
-    function formatPrice($priceString){
-        $priceString = number_format($priceString);
-        $priceString =  '$' . $priceString;
-        return $priceString;
-    }
 ?>
