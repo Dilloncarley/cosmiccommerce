@@ -23,8 +23,13 @@
 
     /* .materialboxed{
     position: relative;
+<<<<<<< HEAD
     width: 400px !important;
     height: 270px !important;
+=======
+    /* width: 400px !important;
+    height: 270px !important; 
+>>>>>>> 8d5fa8c0523b35c57d6d2173e5a649b76ea20a3d
     } */
 
     
@@ -45,7 +50,7 @@
 <div class="section white">
   <div class="row container">
     <h2 class="header">Current Listings</h2>
-    <p id="sub-header1" class="grey-text text-darken-3 lighten-3 left-align">Browse what we have to offer.</p>
+    <p id="sub-header1" class="grey-text text-darken-4 left-align">Browse what we have to offer.</p>
   </div>
 </div>
 
@@ -93,13 +98,13 @@
             <input class="hide" name="product_title" value="{{item.item_name}}">
 
             {% if netId %}
-            <a class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
+            <a class="add-to-cart btn-floating halfway-fab waves-effect waves-light deep-purple darken-3  {% if item.quantity == 0 %} disabled {% endif %}"><i
                 class="material-icons">add_shopping_cart
               </i></a>
             </form>
         </div>
         {% else %}
-        <a href="{{app.request.getRootUri}}/login" class="btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
+        <a href="{{app.request.getRootUri}}/login" class="btn-floating halfway-fab waves-effect waves-light deep-purple darken-3  {% if item.quantity == 0 %} disabled {% endif %}"><i
             class="material-icons">add_shopping_cart
           </i></a>
       </div>
@@ -132,8 +137,8 @@
     </div>
     <div class="card-action right-align act">
       <a class="purple-text text-darken-2" href="/inventory/view/item/{{item.product_id}}">View</a>
-
-      <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
+      <span class="new badge green accent-4" data-badge-caption= "${{item.price | number_format}}"></span>
+      <span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span>
 
       {% if item.quantity == 0 %}
       <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
@@ -141,13 +146,14 @@
     </div>
   </div>
 </div>
+
 {% endfor %}
 
 <!--Add inventory item-->
 {% if isAdmin %}
 
 <div class="fixed-action-btn">
-  <a class="btn-floating tooltipped btn-large purple darken-2 waves-effect waves-light left" data-position="left"
+  <a class="btn-floating tooltipped btn-large deep-purple darken-3 waves-effect waves-light left" data-position="left"
     data-tooltip="Add inventory item" href="/admin-dashboard/inventory/create/item">
     <i class="large material-icons">add</i>
   </a>
@@ -163,6 +169,7 @@
 
 {% endif %}
 <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
+
 
 
 </div>
