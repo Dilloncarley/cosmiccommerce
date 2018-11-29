@@ -26,14 +26,28 @@ $authenticateForRole = function ($user_id, $db) {
         } else {
             $query = "SELECT isAdmin FROM users WHERE id = $user_id";
             $userIsAdmin= $db->query($query)->fetchColumn();
+           
              if (!$userIsAdmin ) {
                 $app = \Slim\Slim::getInstance();
                 $app->response->redirect($app->urlFor('error', array('err' => 'Sorry, you do not have the right permissions to view this page')));
 
             }
+          
         }
         
     };
+};
+$adminValue = function($user_id, $db){
+    if($user_id === null) return false;
+    else {
+        $query = "SELECT isAdmin FROM users WHERE id = $user_id";
+        $userIsAdmin= $db->query($query)->fetchColumn();
+        if(!$userIsAdmin){
+            return false;
+        } else {
+            return true;
+        }
+    }
 };
 //checks if user is logged in
 $authenticated = function($netId){
