@@ -39,12 +39,13 @@
     
       {% set count = 0 %}
       {% set total = 0 %}
+
       <div class="row">
       <ul class="collection">
           
             {% for item in cartItems %}
             {% set count = count + item.amount %}
-         
+          
             <li class="collection-item avatar">
              
               <div class="col s12"> <img src="{{item.product_image}}" alt="" class="circle cart-image "><span class="title"> {{item.item_name}}</span></div>
@@ -87,7 +88,7 @@
     </div>
    
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
+      <a href="{{app.request.getRootUri}}/checkout" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
     </div>
   </div>
   <div class="row">
