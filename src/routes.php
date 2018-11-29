@@ -109,6 +109,7 @@ $app->group('/inventory', function () use ($app, $twig, $netId, $user_id, $db, $
     $app->get('/', function () use ($app, $twig, $netId, $user_id,$isAdmin, $db ) {
         require_once('controllers/cart/list-items-in-cart.php');
         require_once('controllers/inventory/list-inventory-items.php');
+        require_once('controllers/inventory/functions/priceFormat.php');
         echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId, 
         'items' => $items, 'cartItems' => $cartItems, 'isAdmin'=> $isAdmin));
         

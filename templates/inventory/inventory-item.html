@@ -41,11 +41,11 @@
           </h5>
           <div class="card-action">
             <div class="center-align">
-              <h4 class="white-text">$100,000{{idPrice}}
+              <h4 class="white-text">${{item.price | number_format}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 {% if item.quantity == 0 %}
                 <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
                 {% else %}
-                <button class="add-to-cart btn waves-effect waves-light deep-purple darken-3 center-align" type="submit" name="addCart">Add to Cart
+                <button class="add-to-cart btn waves-effect waves-light deep-purple darken-3" type="submit" name="addCart">Add to Cart
                   <i class="material-icons left">add</i></button></h4>
               <h5 class="white-text center">{{item.quantity}} left in stock!</h5>
             {% endif %}
@@ -54,6 +54,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 <div class="row">
   <div class="col m12 fixed-action-btn">

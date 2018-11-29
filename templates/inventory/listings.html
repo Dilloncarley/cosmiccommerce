@@ -132,7 +132,7 @@
     </div>
     <div class="card-action right-align act">
       <a class="purple-text text-darken-2" href="/inventory/view/item/{{item.product_id}}">View</a>
-
+      <span class="new badge green accent-4" data-badge-caption= "${{item.price | number_format}}"></span>
       <span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span>
 
       {% if item.quantity == 0 %}
@@ -141,6 +141,7 @@
     </div>
   </div>
 </div>
+
 {% endfor %}
 
 <!--Add inventory item-->
@@ -163,6 +164,7 @@
 
 {% endif %}
 <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
+
 
 
 </div>
