@@ -44,8 +44,13 @@
               {% if item.quantity == 0 %}
               <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
               {% else %}
+<<<<<<< HEAD
               <button class="btn waves-effect waves-light deep-purple darken-3" type="submit" name="addCart">Add to Cart
                 <i class="material-icons left">add</i></h4>
+=======
+              <button class="add-to-cart btn waves-effect waves-light purple darken-2" type="submit" name="addCart">Add to Cart
+                <i class="material-icons left">add</i></h4></button>
+>>>>>>> 3a1256b9e0d5011a9dbf4b297559216d9324d494
             <h5 class="white-text center">{{item.quantity}} left in stock!</h5>
             {% endif %}
           </div>
@@ -62,7 +67,7 @@
     </a>
   </div>
 </div>
-
+ 
 {% endfor %}
 
 {% include 'inventory/cart-fab-modal.html' %}

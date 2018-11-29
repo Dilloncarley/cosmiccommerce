@@ -96,12 +96,14 @@
             <a class="add-to-cart btn-floating halfway-fab waves-effect waves-light deep-purple darken-3  {% if item.quantity == 0 %} disabled {% endif %}"><i
                 class="material-icons">add_shopping_cart
               </i></a>
+            </form>
         </div>
         {% else %}
         <a href="{{app.request.getRootUri}}/login" class="btn-floating halfway-fab waves-effect waves-light deep-purple darken-3  {% if item.quantity == 0 %} disabled {% endif %}"><i
             class="material-icons">add_shopping_cart
           </i></a>
       </div>
+    
       {% endif %}
 
       {% if isAdmin %}
@@ -109,14 +111,16 @@
         <a class="btn-floating waves-effect halfway-fab waves-light green" href="/admin-dashboard/inventory/update/item/{{item.product_id}}"
         ><i class="material-icons">edit</i></a>
       </div>
-
       <div class="fixed-action-btn2" style="position:relative; bottom:0px; right:90px">
-        <a class="btn-floating waves-effect halfway-fab waves-light red"><i class="material-icons">remove</i></a>
+          <form class="delete-form" action="/admin-dashboard/inventory/delete/item/{{item.product_id}}" method="POST">
+        <button class="btn-floating waves-effect halfway-fab waves-light red" type="submit">
+          <i class="material-icons">remove</i></button>
+          </form>
+
       </div>
 
       {% endif %}
 
-      </form>
 
     </div>
     <div class="card-content ">
