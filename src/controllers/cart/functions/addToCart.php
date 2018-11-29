@@ -19,6 +19,10 @@ function decrementInventoryItem($db, $productId, $userId){
     $query = "UPDATE inventory_items SET quantity = quantity - 1 WHERE product_id = $productId";
     $db->query($query);
 }
+function cartItem($db, $productId){
+    $query = "SELECT * FROM inventory_items WHERE product_id = $productId";
+    return $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+}
 function addToCart($productId, $userId, $amount, $db){
     //first check if item is in stock
     $isInStock = itemIsInStock($db, $productId);
@@ -34,23 +38,32 @@ function addToCart($productId, $userId, $amount, $db){
 
             //decrement quantity from inventory items table
             decrementInventoryItem($db, $productId, $userId);
-
-            $response = 1;
+            $cartItemArray = cartItem($db, $productId);
+                $messageArray =  array( 'cartItem' => $cartItemArray, 
+                'status' => "5"); 
+            $response = $messageArray;
         } else {
             //if not already in cart add it
             $query = "INSERT INTO cart_items (product_id, id, amount) VALUES ($productId, $userId, $amount)";
             $insertCartQuery = $db->query($query);
             if($insertCartQuery) { // was query a success?
                 decrementInventoryItem($db, $productId, $userId);
-                $response = 1;  
+                $cartItemArray = cartItem($db, $productId);
+                $messageArray =  array( 'cartItem' => $cartItemArray, 
+                'status' => "5"); 
+                $response = $messageArray ;
 
             } else {
-                $response = $db->errorInfo(); 
+                $errorArray = array( 'message' => $db->errorInfo(), 
+                'status' => "0");
+                $response = $errorArray;
             }
 
         }
     } else {
-        $response = 3;
+        $outOfStockArray = array( 'productId' => $productId, 
+        'status' => "3" );
+        $response = $outOfStockArray;
     }
     
     
