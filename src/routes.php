@@ -62,6 +62,7 @@ $app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($us
         $app->post('/create/item', function () use ($app, $twig, $db) {
             require_once('controllers/inventory/create-inventory-item.php');
             $id = $db->lastInsertId(); 
+            $app->response->redirect('/inventory/view/item/' . $id);
         });
         // Get item with ID
         $app->get('/view/item/:id', function ($id) use ($app, $twig, $netId, $db) {
