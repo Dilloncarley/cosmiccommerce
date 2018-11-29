@@ -153,7 +153,12 @@ $app->group('/cart', $authenticated($netId), function () use ($app, $twig, $user
 });
 
 
+$app->get('/checkout', function () use ($app, $twig,$db, $user_id) {
+    $query = "DELETE FROM cart_items WHERE id = $user_id";
+    $db->query($query);
+    echo $twig->render('checkout.html', array('app' => $app));
 
+    });
 
 
 ?>
