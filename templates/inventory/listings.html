@@ -20,12 +20,18 @@
     .badge{
       float: left !important;
     }
-
-    .materialboxed{
-    position: relative;
-    width: 400px !important;
-    height: 270px !important;
+    #items-notification{
+      position: relative;
+      left: 55px;
+      z-index: 100;
+      min-width: 0 !important;
+      border-radius: 50% !important;
     }
+    /* .materialboxed{
+    position: relative;
+    /* width: 400px !important;
+    height: 270px !important; 
+    } */
 
     
   </style>
@@ -45,38 +51,50 @@
 <div class="section white">
   <div class="row container">
     <h2 class="header">Current Listings</h2>
-    <p id="sub-header1" class="grey-text text-darken-3 lighten-3 left-align">Browse what we have to offer.</p>
+    <p id="sub-header1" class="grey-text text-darken-4 left-align">Browse what we have to offer.</p>
   </div>
 </div>
 
 <!--Search bar-->
 <div class="row">
-  <form>
+  <form action="/admin-dashboard/inventory/filter" method="POST">
 
-    <div class="input-field col m4 push-m2 s12 ">
+    <div class="input-field col m4 push-m2 s12">
       <i class="material-icons prefix">search</i>
-      <input id="icon_prefix" type="text" class="validate">
+      <input id="icon_prefix" type="text" class="validate" name="userEntry" {% if filter %} value="{{userEntry}}" {% endif %}>
       <label for="icon_prefix">search</label>
     </div>
 
-  </form>
-
+  
+  
   <!--Filter Select-->
   <div class="input-field col m3 push-m2 s12">
-    <select multiple>
-      <option value="1">Planets</option>
-      <option value="2">Spacecraft</option>
-      <option value="3">Stars</option>
-      <option value="4">Asteroids</option>
-      <option value="5">Misc.</option>
+    <select multiple name="userSelection">
+      <option value="planet">Planets</option>
+      <option value="spacecraft">Spacecraft</option>
+      <option value="star">Stars</option>
+      <option value="asteroid">Asteroids</option>
+      <option value="miscellaneous">Misc.</option>
     </select>
     <label>Filter search</label>
   </div>
+<div class="col m2 push-m2 s12">
+  <button class="btn-floating tooltipped btn-large deep-purple darken-3 waves-effect waves-light" type="submit" name="action"
+  data-position="right" data-tooltip="Apply criteria">
+      <i class="material-icons right">location_searching</i></button>
+    </div>
+</form>
 </div>
+
+
 
 
 <!--Inv. Cards-->
 <div class="row">
+  {% if filter %}
+  {% set items = filterItems %}
+  {% endif %}
+
   {% for item in items %}
   <div class="col s12 m4">
     <div class="card hoverable">
@@ -89,17 +107,16 @@
 
           <form class="item-form" action="" method="POST">
             <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
-
             <input class="hide" name="product_title" value="{{item.item_name}}">
 
             {% if netId %}
-            <a class="add-to-cart btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
+            <a class="add-to-cart btn-floating halfway-fab waves-effect waves-light deep-purple darken-3  {% if item.quantity == 0 %} disabled {% endif %}"><i
                 class="material-icons">add_shopping_cart
               </i></a>
             </form>
         </div>
         {% else %}
-        <a href="{{app.request.getRootUri}}/login" class="btn-floating halfway-fab waves-effect waves-light purple darken-2  {% if item.quantity == 0 %} disabled {% endif %}"><i
+        <a href="{{app.request.getRootUri}}/login" class="btn-floating halfway-fab waves-effect waves-light deep-purple darken-3  {% if item.quantity == 0 %} disabled {% endif %}"><i
             class="material-icons">add_shopping_cart
           </i></a>
       </div>
@@ -130,10 +147,10 @@
       <span class="card-title grey-text text-darken-4">{{item.item_name}}<i class="material-icons right">close</i></span>
       <p> {{item.sub_descrip}} </p>
     </div>
-    <div class="card-action right-align act">
+    <div class="card-action badge-section{{item.product_id}} right-align act">
       <a class="purple-text text-darken-2" href="/inventory/view/item/{{item.product_id}}">View</a>
-
-      <span class="new badge purple darken-2" data-badge-caption="{{item.item_type}}"></span>
+      <span class="new badge green accent-4" data-badge-caption= "${{item.price | number_format}}"></span>
+      <span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span>
 
       {% if item.quantity == 0 %}
       <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
@@ -141,13 +158,14 @@
     </div>
   </div>
 </div>
+
 {% endfor %}
 
 <!--Add inventory item-->
 {% if isAdmin %}
 
 <div class="fixed-action-btn">
-  <a class="btn-floating tooltipped btn-large purple darken-2 waves-effect waves-light left" data-position="left"
+  <a class="btn-floating tooltipped btn-large deep-purple darken-3 waves-effect waves-light left" data-position="left"
     data-tooltip="Add inventory item" href="/admin-dashboard/inventory/create/item">
     <i class="large material-icons">add</i>
   </a>
@@ -163,6 +181,7 @@
 
 {% endif %}
 <script type="text/javascript" src="{{app.request.getRootUri}}/js/cartAjaxRoutes.js"></script>
+
 
 
 </div>

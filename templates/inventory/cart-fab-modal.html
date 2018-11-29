@@ -1,11 +1,34 @@
 <style>
-    /* #items-notification{
+   
+    .collection .collection-item {
+      line-height: 2.0rem !important;
+    }
+    .collection .collection-item.avatar {
+      min-height: 150px !important;
+    }
+   
+    .subD{
+      line-height: 4.0rem;
+      max-width: 80% !important;
+      margin-left: 20px !important;
+    }
+    .title {
+      margin-left: 20px !important;
+    }
+    .cart-image {
+      width: 62px !important;
+      height: 62px !important;
+    }
+    .price {
       position: relative;
-      left: 55px;
-      z-index: 100;
-      min-width: 0 !important;
-      border-radius: 50% !important;
-    } */
+      top: 15px;
+    }
+    .delete{
+      position: relative;
+      left: 20px;
+
+    }
+   
   </style>
  
  <!-- Modal Structure -->
@@ -15,24 +38,57 @@
      
     
       {% set count = 0 %}
-    
+      {% set total = 0 %}
+
+      <div class="row">
       <ul class="collection">
+          
             {% for item in cartItems %}
             {% set count = count + item.amount %}
+          
             <li class="collection-item avatar">
-            <img src="{{item.product_image}}" alt="" class="circle materialboxed">
+             
+              <div class="col s12"> <img src="{{item.product_image}}" alt="" class="circle cart-image "><span class="title"> {{item.item_name}}</span></div>
+              <div class="col s12">  <p class="subD truncate">{{item.sub_descrip}}</p></div>
+              <div class="col s12"> <p><span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span>
+                <form class="delete-item-form" action="/cart/delete/cart/item/{{item.product_id}}/all" method="POST">
+                    <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
+                    <input class="hide" id="amount" name="amount" value="all">
 
-              <span class="title"> {{item.item_name}}</span>
-              <p class="truncate">{{item.sub_descrip}}</p>
-              <p><span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span></p>
-                <p class="right">{{item.amount}}</p>
-              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
-            {% endfor %}   
-          </ul>
+                    <button class="btn-floating btn-small waves-effect waves-light red right delete delete" type="submit"  ><i class="material-icons">delete</i></button>
+                  </form>
+              </p></div>
+             
+            
+                <div class="secondary-content">
+                 
+                    <div class="col m12 s12">
+                        <p  class="center-align">
+                         
+                          <span id="{{item.product_id}}amount">{{item.amount}}</span>
+                          
+                           </p>
+                       
+                          <p><span class="price new badge green accent-4" data-badge-caption= "${{item.price | number_format}}"></span></p>
+
+                    
+                
+                
+                    </div>
     </div>
+                    
+         
+            </li>
+            {% set total = total + (item.amount * item.price) %}
+            {% endfor %}   
+            
+          </ul>
+          <h5 class="right">Total: <span id="total"> ${{total | number_format}}</span></h5>
+        </div>
+    </div>
+   
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
+      <a href="{{app.request.getRootUri}}/checkout" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
     </div>
   </div>
   <div class="row">

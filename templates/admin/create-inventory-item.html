@@ -5,7 +5,7 @@
   <h1>{{error}}</h1>
   <div class="row">
     <div class="col s12 m8 offset-m2 center-align ">
-      <div class="welcome-card card blue-grey lighten-2">
+      <div class="welcome-card card grey darken-4">
         <div class="card-content white-text">
           {% if updating %}
           <span class="card-title">Edit an Inventory Item</span>
@@ -27,11 +27,11 @@
           <div class="input-field col s6">
             <select name="itemType">
               <option value="1">{{item.item_type}} </option>>
-              <option value="Planets">Planets</option>
-              <option value="Spacecraft">Spacecraft</option>
-              <option value="Stars">Stars</option>
-              <option value="Asteroids">Asteroids</option>
-              <option value="Misc">Misc.</option>
+              <option value="planet">Planets</option>
+              <option value="spacecraft">Spacecraft</option>
+              <option value="star">Stars</option>
+              <option value="asteroid">Asteroids</option>
+              <option value="miscellaneous">Misc.</option>
             </select>
             <label>Type</label>
           </div>
@@ -51,11 +51,15 @@
             <input id="itemQuantity" type="text" class="validate" name="itemQuantity" value="{{item.quantity}}"
               required>
             <label for="itemQuantity">Quantity</label>
-
+          </div>
+          <div class="input-field col s4 left">
+              <input id="itemPrice" type="text" class="validate" name="itemPrice" value="{{item.price}}"
+                required>
+              <label for="itemPrice">Price</label>
           </div>
           <div class="input-field col s4">
             <!-- <a href="/admin-dashboard/inventory/update/item/{{item.product_id}}"> -->
-            <button class="btn waves-effect waves-light blue-grey lighten-2" type="submit" name="action">Update Item
+            <button class="btn waves-effect waves-light grey darken-4" type="submit" name="action">Update Item
               <i class="material-icons right">send</i></button></a>
           </div>
         </form>
@@ -74,11 +78,11 @@
 
           <div class="input-field col s6">
             <select name="itemType">
-              <option value="Planets">Planets</option>>
-              <option value="Spacecraft">Spacecraft</option>
-              <option value="Stars">Stars</option>
-              <option value="Asteroids">Asteroids</option>
-              <option value="Misc">Misc.</option>
+              <option value="planet">Planets</option>>
+              <option value="spacecraft">Spacecraft</option>
+              <option value="star">Stars</option>
+              <option value="asteroid">Asteroids</option>
+              <option value="miscellaneous">Misc.</option>
             </select>
             <label>Type</label>
           </div>
@@ -98,10 +102,14 @@
             <input id="itemQuantity" type="text" class="validate" name="itemQuantity" required>
             <label for="itemQuantity">Quantity</label>
           </div>
+          <div class="input-field col s4 left">
+              <input id="itemPrice" type="text" class="validate" name="itemPrice" required>
+              <label for="itemPrice">Price</label>
+          </div>
           <div class="input-field col s4">
             <!-- <a href="inventory/view/item/{{item.product_id}}"> -->
             <button class="btn waves-effect waves-light blue-grey lighten-2 right" type="submit" name="action">Add Item
-              <i class="material-icons right">send</i></button></a>
+              <i class="material-icons right">send</i></button>
           </div>
         </form>
 

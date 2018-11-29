@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<center>
+<a href="{{app.request.getRootUri}}/" class="brand-logo center"><img src="https://i.imgur.com/3DnBCl5.png" height="400"></a>
+<h4>Thanks for your purchase!!!</h4>
+<a href="{{app.request.getRootUri}}/inventory">Return back to listings</a>
+</center>
+{% endblock %}

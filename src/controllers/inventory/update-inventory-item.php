@@ -8,7 +8,8 @@
     $main_descrip = $app->request->post('itemDescrip');
     $item_type = $app->request->post('itemType');
     $product_image = $app->request->post('itemURL');
+    $price = $app->request->post('itemPrice');
 
-    updateInvItem($item_name, $quantity, $sub_descrip, $main_descrip, $product_image, $item_type, $id, $db);
+    updateInvItem($item_name, $quantity, $sub_descrip, $main_descrip, $product_image, $item_type, $id, $price, $db);
 
 ?>

@@ -1,45 +1,101 @@
 <style>
-        #items-notification{
-          position: relative;
-          left: 15px;
-          z-index: 100;
-          min-width: 0 !important;
-          border-radius: 50% !important;
-          bottom: 45px;
-        }
-      </style>
+    #items-notification{
+      position: relative;
+      left: 15px;
+      z-index: 100;
+      min-width: 0 !important;
+      border-radius: 50% !important;
+      bottom: 45px;
+    }
+    .collection .collection-item {
+      line-height: 2.0rem !important;
+    }
+    .collection .collection-item.avatar {
+      min-height: 150px !important;
+    }
+   
+    .subD{
+      line-height: 4.0rem;
+      max-width: 80% !important;
+      margin-left: 20px !important;
+    }
+    .title {
+      margin-left: 20px !important;
+    }
+    .cart-image {
+      width: 62px !important;
+      height: 62px !important;
+    }
+    .price {
+      position: relative;
+      top: 15px;
+    }
+    .delete{
+      position: relative;
+      left: 20px;
+
+    }
+  </style>
+ 
+ <!-- Modal Structure -->
+ <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Items in Your Cart</h4>
      
-     <!-- Modal Structure -->
-     <div id="modal1" class="modal modal-fixed-footer">
-        <div class="modal-content">
-          <h4>Items in Your Cart</h4>
-         
-        
-          {% set count = 0 %}
-          <div class="collection">
-                {% for item in cartItems %}
-                {% set count = count + item.amount %}
-                <div class="collection-item avatar">
-                <img src="{{item.product_image}}" alt="" class="circle materialboxed">
     
-                  <span class="title"> {{item.item_name}}</span>
-                  <p class="truncate">{{item.sub_descrip}}</p>
-                  <p><span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span></p>
-                    <p class="right">{{item.amount}}</p>
-                  <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </div>
-                
-                {% endfor %}   
-            </div>
+      {% set count = 0 %}
+      {% set total = 0 %}
+      <div class="row">
+      <div class="collection">
+            {% for item in cartItems %}
+            {% set count = count + item.amount %}
+            <div class="collection-item avatar">
+                <div class="col s12"> <img src="{{item.product_image}}" alt="" class="circle cart-image "><span class="title"> {{item.item_name}}</span></div>
+                <div class="col s12">  <p class="subD truncate">{{item.sub_descrip}}</p></div>
+                <div class="col s12"> <p><span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span>
+                  <form class="delete-item-form" action="/cart/delete/cart/item/{{item.product_id}}/all" method="POST">
+                      <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
+                      <input class="hide" id="amount" name="amount" value="all">
+  
+                      <button class="btn-floating btn-small waves-effect waves-light red right delete delete" type="submit"  ><i class="material-icons">delete</i></button>
+                    </form>
+                </p></div>
+               
               
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
-        </div>
+                  <div class="secondary-content">
+                   
+                      <div class="col m12 s12">
+                          <p  class="center-align">
+                           
+                            <span id="{{item.product_id}}amount">{{item.amount}}</span>
+                            
+                             </p>
+                         
+                            <p><span class="price new badge green accent-4" data-badge-caption= "${{item.price | number_format}}"></span></p>
+  
+                      
+                  
+                  
+                      </div>
       </div>
-    <div>
-          <button data-target="modal1" class="btn-floating waves-effect waves-light deep-purple darken-3 tooltipped modal-trigger"  data-position="left" data-tooltip="View cart items" >
-            <i class="large material-icons">shopping_cart</i>
-          </button>
-          <span id="items-notification" class="new badge red darken-2 " data-badge-caption=" {{ count }}"></span>
-          </div>
+            </div>
+            {% set total = total + (item.amount * item.price) %}
+            {% endfor %}  
+           
+        </div>
+        <h5 class="right">Total: <span id="total"> ${{total | number_format}}</span></h5> 
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+    
+      <div class="col m12"><a href="{{app.request.getRootUri}}/checkout" class="modal-close waves-effect waves-green btn-flat">Checkout</a>
+      </div>
+    </div>
+  </div>
+<div>
+      <button data-target="modal1" class="btn-floating waves-effect waves-light deep-purple darken-3 tooltipped modal-trigger"  data-position="left" data-tooltip="View cart items" >
+        <i class="large material-icons">shopping_cart</i>
+      </button>
+      <span id="items-notification" class="new badge red darken-2 " data-badge-caption=" {{ count }}"></span>
+      </div>
