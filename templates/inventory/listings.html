@@ -20,16 +20,17 @@
     .badge{
       float: left !important;
     }
-
+    #items-notification{
+      position: relative;
+      left: 55px;
+      z-index: 100;
+      min-width: 0 !important;
+      border-radius: 50% !important;
+    }
     /* .materialboxed{
     position: relative;
-<<<<<<< HEAD
-    width: 400px !important;
-    height: 270px !important;
-=======
     /* width: 400px !important;
     height: 270px !important; 
->>>>>>> 8d5fa8c0523b35c57d6d2173e5a649b76ea20a3d
     } */
 
     
@@ -94,7 +95,6 @@
 
           <form class="item-form" action="" method="POST">
             <input class="hide" id="product_id" name="product_id" value="{{item.product_id}}">
-
             <input class="hide" name="product_title" value="{{item.item_name}}">
 
             {% if netId %}
@@ -135,7 +135,7 @@
       <span class="card-title grey-text text-darken-4">{{item.item_name}}<i class="material-icons right">close</i></span>
       <p> {{item.sub_descrip}} </p>
     </div>
-    <div class="card-action right-align act">
+    <div class="card-action badge-section{{item.product_id}} right-align act">
       <a class="purple-text text-darken-2" href="/inventory/view/item/{{item.product_id}}">View</a>
       <span class="new badge green accent-4" data-badge-caption= "${{item.price | number_format}}"></span>
       <span class="new badge deep-purple darken-3" data-badge-caption="{{item.item_type}}"></span>

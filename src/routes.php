@@ -131,7 +131,9 @@ $app->group('/cart', $authenticated($netId), function () use ($app, $twig, $user
     });
 
     // Delete item in cart
-    $app->delete('/delete/cart/item/:id', function ($id) {
+    $app->post('/delete/cart/item/:id/:amount', function ($id, $amount) use ($app, $twig, $user_id, $db) {
+        require_once('controllers/cart/delete-items-from-cart.php');
+        $app->response->redirect('/inventory');
 
     });
  //Add item to cart
