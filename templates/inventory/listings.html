@@ -51,32 +51,44 @@
 
 <!--Search bar-->
 <div class="row">
-  <form>
+  <form action="/admin-dashboard/inventory/filter" method="POST">
 
-    <div class="input-field col m4 push-m2 s12 ">
+    <div class="input-field col m4 push-m2 s12">
       <i class="material-icons prefix">search</i>
-      <input id="icon_prefix" type="text" class="validate">
+      <input id="icon_prefix" type="text" class="validate" name="userEntry" {% if filter %} value="{{userEntry}}" {% endif %}>
       <label for="icon_prefix">search</label>
     </div>
 
-  </form>
-
+  
+  
   <!--Filter Select-->
   <div class="input-field col m3 push-m2 s12">
-    <select multiple>
-      <option value="1">Planets</option>
-      <option value="2">Spacecraft</option>
-      <option value="3">Stars</option>
-      <option value="4">Asteroids</option>
-      <option value="5">Misc.</option>
+    <select multiple name="userSelection">
+      <option value="planets">Planets</option>
+      <option value="spacecraft">Spacecraft</option>
+      <option value="stars">Stars</option>
+      <option value="asteroids">Asteroids</option>
+      <option value="miscellaneous">Misc.</option>
     </select>
     <label>Filter search</label>
   </div>
+<div class="col m2 push-m2 s12">
+  <button class="btn-floating tooltipped btn-large purple darken-2 waves-effect waves-light" type="submit" name="action"
+  data-position="right" data-tooltip="Apply criteria">
+      <i class="material-icons right">location_searching</i></button>
+    </div>
+</form>
 </div>
+
+
 
 
 <!--Inv. Cards-->
 <div class="row">
+  {% if filter %}
+  {% set items = filterItems %}
+  {% endif %}
+
   {% for item in items %}
   <div class="col s12 m4">
     <div class="card hoverable">
