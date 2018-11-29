@@ -38,11 +38,11 @@ $app->get('/logout', function() use ($app, $twig) {
 
 
 });
-
+$isAdmin = $adminValue($user_id, $db);
 // ADMIN GROUP ROUTES
-$app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($user_id, $db), function () use ($app, $twig, $netId, $user_id, $db) {
+$app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($user_id, $db), function () use ($app, $twig, $netId, $user_id, $db, $isAdmin) {
 
-
+    // $isAdmin = authenticateForRole($user_id, $db);
     // Inventory group routes
     $app->group('/inventory', function () use ($app, $twig, $db, $netId) {
 
@@ -85,31 +85,31 @@ $app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($us
     });
 
      //base list all inventory items for ADMIN
-     $app->get('/', function () use ($app, $twig, $netId, $user_id, $db) {
+     $app->get('/', function () use ($app, $twig, $netId, $user_id, $db, $isAdmin) {
             require_once('controllers/cart/list-items-in-cart.php');
             require_once('controllers/inventory/list-inventory-items.php');
             echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId, 
-            'items' => $items, 'cartItems' => $cartItems, 'isAdmin' => true));
+            'items' => $items, 'cartItems' => $cartItems, 'isAdmin' => $isAdmin));
     });
 });
 //Regular authenticated and guest user inventory group routes
-$app->group('/inventory', function () use ($app, $twig, $netId, $user_id, $db) {
+$app->group('/inventory', function () use ($app, $twig, $netId, $user_id, $db, $isAdmin) {
 
      // View item with ID
-     $app->get('/view/item/:id', function ($id) use ($app, $twig, $user_id, $netId, $db) {
+     $app->get('/view/item/:id', function ($id) use ($app, $twig, $user_id, $netId,$isAdmin, $db) {
         require_once('controllers/cart/list-items-in-cart.php');
         require_once('controllers/inventory/display-item.php');
         echo $twig->render('inventory/inventory-item.html', array('app' => $app, 'netId' => $netId,  
-        'individualItem' => $individualItem, 'cartItems' => $cartItems));
+        'individualItem' => $individualItem, 'cartItems' => $cartItems, 'isAdmin' => $isAdmin));
     });
 
 
     //Base listings page
-    $app->get('/', function () use ($app, $twig, $netId, $user_id, $db) {
+    $app->get('/', function () use ($app, $twig, $netId, $user_id,$isAdmin, $db ) {
         require_once('controllers/cart/list-items-in-cart.php');
         require_once('controllers/inventory/list-inventory-items.php');
         echo $twig->render('inventory/listings.html', array('app' => $app, 'netId' => $netId, 
-        'items' => $items, 'cartItems' => $cartItems));
+        'items' => $items, 'cartItems' => $cartItems, 'isAdmin'=> $isAdmin));
         
     });
 
