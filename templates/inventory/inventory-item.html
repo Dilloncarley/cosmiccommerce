@@ -18,7 +18,7 @@
 
       <h2 class="white-text left">
         <div>
-          <span class="new badge purple darken-2 valign-wrapper" id="item_tag" data-badge-caption="{{item.item_type}}">
+          <span class="new badge deep-purple darken-3 valign-wrapper" id="item_tag" data-badge-caption="{{item.item_type}}">
           </span>{{item.item_name}}</div>
       </h2>
     </div>
@@ -36,7 +36,7 @@
     </div>
     <div class="col s12 m6">
       <div class="card">
-        <div class="card-panel opacity blue-grey darken-4">
+        <div class="card-panel opacity grey darken-4">
           <h5 class="white-text">{{item.main_descrip}}
           </h5>
           <div class="card-action">
@@ -44,7 +44,7 @@
               {% if item.quantity == 0 %}
               <span class="new badge red darken-2" data-badge-caption="out of stock"></span>
               {% else %}
-              <button class="btn waves-effect waves-light purple darken-2" type="submit" name="addCart">Add to Cart
+              <button class="btn waves-effect waves-light deep-purple darken-3" type="submit" name="addCart">Add to Cart
                 <i class="material-icons left">add</i></h4>
             <h5 class="white-text center">{{item.quantity}} left in stock!</h5>
             {% endif %}
@@ -56,7 +56,7 @@
 </div>
 <div class="row">
   <div class="col m12 fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light purple darken-2 tooltipped" href="/inventory"
+    <a class="btn-floating btn-large waves-effect waves-light deep-purple darken-3 tooltipped" href="/inventory"
       data-position="right" data-tooltip="Return to listings">
       <i class="large material-icons">arrow_back</i>
     </a>
