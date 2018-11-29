@@ -44,7 +44,7 @@ $app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($us
 
     // $isAdmin = authenticateForRole($user_id, $db);
     // Inventory group routes
-    $app->group('/inventory', function () use ($app, $twig, $db, $netId) {
+    $app->group('/inventory', function () use ($app, $twig, $db, $netId, $isAdmin) {
 
         //delete item form
         $app->post('/delete/item/:id', function ($id) use ($app, $twig, $db, $netId)  {  
@@ -82,8 +82,18 @@ $app->group('/admin-dashboard', $authenticated($netId), $authenticateForRole($us
        $app->post('/update/item/:id', function ($id) use ($app, $twig, $db) {
             require_once('controllers/inventory/update-inventory-item.php');
             $app->response->redirect('/inventory/view/item/' . $id );
-       });      
+       });    
+       
+        //delete item form
+    $app->post('/filter', function () use ($app, $twig, $db, $netId, $isAdmin)  {  
+        require_once('controllers/inventory/search-items.php');
+        echo $twig->render('inventory/listings.html', array('app' => $app, 'filterItems' => $searchItems, 'userEntry' => $item_name,
+            'filter'=> true, 'isAdmin'=> $isAdmin));
+        
     });
+    });
+
+   
 
      //base list all inventory items for ADMIN
      $app->get('/', function () use ($app, $twig, $netId, $user_id, $db, $isAdmin) {
